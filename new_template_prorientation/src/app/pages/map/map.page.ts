@@ -22,7 +22,8 @@ export class MapPage implements OnInit {
     }
 
   ngOnInit() {
-    /*var object1 = new Geolocation();
+    
+    var object1 = new Geolocation();
     object1.getCurrentPosition().then(async (resp) => {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
@@ -60,6 +61,6 @@ export class MapPage implements OnInit {
         accessToken: 'pk.eyJ1IjoibHVjYXNib3V2YXJlbCIsImEiOiJjazJycHIwbXQwZGs3M25udmltaGg3eTFlIn0.XGIAxbBH8QGE1ZnmHUztMQ'
       }).addTo(maptest1);
 
-    });*/
+    });
   }
 }

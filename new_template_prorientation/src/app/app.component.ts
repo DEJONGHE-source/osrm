@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
 
   loggedIn = false;
   dark = false;
-  hideForm = true;
-  hideButton = false;
+  hideFormTrail = true;
+  hideFormOrientation = true;
   distanceSubmit = false;
   target = '5000';
   dataForm : string;
@@ -115,23 +115,32 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/tutorial');
   }
 
-  enableShowForm = () => {
-    this.hideButton = true;
-    this.hideForm = false;
+  enableShowFormTrail = () => {
+    this.hideFormTrail = false;
   }
 
-  async onClickSubmit(form : NgForm) {
+  enableShowFormOrientation = () => {
+      this.hideFormOrientation = false;
+  }
+
+  async onClickSubmitTrail(form : NgForm) {
     this.distanceSubmit= true;
-    /*console.log(form.value.distance)*/
-    await this.storage.set(`distanceCoursePied`,form.value.distance);
-    /*this.target =  form.value;
-    console.log('target : ',this.target);*/
-    /*var url = '/app/tabs/trail/'+this.target;*/
+    await this.storage.set(`distanceCoursePied`,form.value.distanceTrail);
+    console.log('test');
     this.router.navigateByUrl('/app/tabs/Trail');
 
   }
 
-  route = ['/app/tabs/Trail'];
+  async onClickSubmitOrientation(form : NgForm) {
+    this.distanceSubmit= true;
+    await this.storage.set(`distanceOrientation`,form.value.distance);
+    this.router.navigateByUrl('/app/tabs/Orientation');
+
+  }
+
+  
+
+  route = ['/app/tabs/map'];
 
   appPages = [
     {

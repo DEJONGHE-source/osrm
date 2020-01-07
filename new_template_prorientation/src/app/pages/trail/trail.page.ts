@@ -22,11 +22,8 @@ export class TrailPage implements OnInit {
     private mapService : MapService,
     private route : ActivatedRoute,
     private storage: Storage
-    ) {
-      this.route.params.subscribe((params)=> {
-        console.log(params);
-      })
-    }
+    ) {}
+
 
   ngOnInit() {
 

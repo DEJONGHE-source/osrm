@@ -13,29 +13,44 @@
 
            <ion-menu-toggle *ngIf="hideButton == false" autoHide="false">
             <ion-item>
-                <ion-button (click)="enableShowForm()">Creer une session</ion-button>
+                
               </ion-item>
             </ion-menu-toggle>
 
-            <form #distanceForm="ngForm" *ngIf="hideForm == false" (ngSubmit)="onClickSubmit(distanceForm)">
-              <ion-list>
-                <ion-item>
-                  <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
-                  <ion-input name="distance" type="number" placeholder="distance" ngModel required></ion-input>
-                </ion-item>
-              </ion-list>
-              <ion-button type = "submit">Commencer session</ion-button>
-            </form>
-
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="route" routerLinkActive="active" routerDirection="root" detail="false">
+            <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
                 <ion-icon slot="start" [name]="run"></ion-icon>
-                <ion-label>
-                  Trail
-                </ion-label>
+                <ion-label>Trail</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
+          <form #distanceForm="ngForm" *ngIf="hideFormTrail == false" (ngSubmit)="onClickSubmitTrail(distanceForm)">
+            <ion-list>
+              <ion-item>
+                <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
+                <ion-input name="distanceTrail" type="number" placeholder="distance" ngModel required></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-button type = "submit">Commencer session</ion-button>
+          </form>
+          
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormOrientation()>
+                <ion-icon slot="start" [name]='compass'></ion-icon>
+                <ion-label>Orientation</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <form #distanceForm="ngForm" *ngIf="hideFormOrientation == false" (ngSubmit)="onClickSubmitOrientation(distanceForm)">
+            <ion-list>
+              <ion-item>
+                <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
+                <ion-input name="distance" type="number" placeholder="distance" ngModel required></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-button type = "submit">Commencer session</ion-button>
+          </form>
+        
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>

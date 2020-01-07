@@ -32,6 +32,17 @@ const routes: Routes = [
       },
 
       {
+        path: 'Orientation',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../orientation/orientation.module').then(m => m.OrientationPageModule)
+          }
+        ]
+
+      },
+
+      {
         path: '',
         children: [
           {
