@@ -34,10 +34,13 @@ export class TrailPage implements OnInit {
     object.getCurrentPosition().then(async (resp) => {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
+
+      lat = 45.784099
+      long = 4.879545
+
       console.log(lat,long)
       var mymap = L.map('mapid').setView([lat, long], 13);
       var testMap = L.map('mapid1').setView([lat, long], 13);
-      this.mapService.testMap = testMap;
 
       mymap.locate({
         watch:true,
@@ -80,11 +83,8 @@ export class TrailPage implements OnInit {
         console.log("res");
         console.log(res);
         var order = res[0];
-        console.log(order);
         var eliminatedNodes = res[1];
-        console.log(eliminatedNodes);
         var arrayCoords = res[2];
-        console.log(arrayCoords);
 
 
         let options = { profile: 'mapbox/walking' };
@@ -110,23 +110,25 @@ export class TrailPage implements OnInit {
           }
         }
 
+        console.log("coordConservedNodes");
         console.log(coordConservedNodes);
 
         for(i=0; i < coordConservedNodes.length ;i++){
           for(j=0; j < coordConservedNodes.length ;j++){
             if(j == order[i]){
-              pointsWay.push(L.latLng(coordConservedNodes[j][0], coordConservedNodes[j][1]))
+              pointsWay.push(L.latLng(coordConservedNodes[j][1], coordConservedNodes[j][0]))
             }
           }
         }
 
 
+        console.log("pointsWay")
         console.log(pointsWay)
 
         var routeControl = L.Routing.control({
           waypoints: pointsWay,
 
-          router: new L.Routing.OSRMv1({serviceUrl: 'http://0.0.0.0:5000/route/v1'}),
+          router: new L.Routing.OSRMv1({serviceUrl: 'http://51.77.212.33:8080/route/v1'}),
           /*router: new L.Routing.mapbox('pk.eyJ1IjoiYWRlam9uZ2hlIiwiYSI6ImNrMzl3eTFmeDAydTYzY21nZ3RoY3MwdTEifQ.vnvS6h87mJWeRuwjiWglrg', options),*/
 
           routeWhileDragging: true
