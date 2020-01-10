@@ -43,6 +43,17 @@ const routes: Routes = [
       },
 
       {
+        path: 'Personal',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../user-space/user-space.module').then(m => m.UserSpacePageModule)
+          }
+        ]
+
+      },
+
+      {
         path: '',
         children: [
           {

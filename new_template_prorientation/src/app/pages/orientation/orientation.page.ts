@@ -33,9 +33,6 @@ export class OrientationPage implements OnInit {
         var lat=resp.coords.latitude
         var long=resp.coords.longitude
 
-        lat = 45.784099
-        long = 4.879545
-
         console.log(lat,long)
         var mymap = L.map('mapid2').setView([lat, long], 13);
         var testMap = L.map('mapid12').setView([lat, long], 13);
@@ -112,12 +109,9 @@ export class OrientationPage implements OnInit {
           console.log(coordConservedNodes);
 
           for(i=0; i < coordConservedNodes.length ;i++){
-            var marker = L.marker([coordConservedNodes[i][0], coordConservedNodes[i][1]]).addTo(mymap);
+            var marker = L.marker([coordConservedNodes[i][1], coordConservedNodes[i][0]]).addTo(mymap);
           }
         });
-
-
-
 
       }).catch((error) => {
         console.log('Error getting location', error);

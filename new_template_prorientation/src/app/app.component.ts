@@ -117,47 +117,49 @@ export class AppComponent implements OnInit {
 
   enableShowFormTrail = () => {
     this.hideFormTrail = false;
+    this.hideFormOrientation = true;
   }
 
   enableShowFormOrientation = () => {
       this.hideFormOrientation = false;
+      this.hideFormTrail = true;
+  }
+
+  disableShowForms = () => {
+    this.hideFormOrientation = true;
+    this.hideFormTrail = true;
+    this.router.navigateByUrl('/app/tabs/Personal');
+
   }
 
   async onClickSubmitTrail(form : NgForm) {
     this.distanceSubmit= true;
     await this.storage.set(`distanceCoursePied`,form.value.distanceTrail);
-    console.log('test');
     this.router.navigateByUrl('/app/tabs/Trail');
-
   }
 
   async onClickSubmitOrientation(form : NgForm) {
     this.distanceSubmit= true;
     await this.storage.set(`distanceOrientation`,form.value.distance);
     this.router.navigateByUrl('/app/tabs/Orientation');
-
   }
 
-  
+
 
   route = ['/app/tabs/map'];
+  routePerso = ['/app/tabs/Personal']
 
   appPages = [
-    {
-      title: 'Orientation',
-      url: '/app/tabs/orientation',
-      icon: 'compass'
-    },
     {
       title: 'Carte',
       url: ['/app/tabs/map'],
       icon: 'map'
     },
-    {
+    /*{
       title: 'Espace Personnel',
       url: '/app/tabs/UserSpace',
       icon: 'body'
-    },
+    },*/
     /*{
       title: 'Schedule',
       url: '/app/tabs/schedule',

@@ -13,13 +13,13 @@
 
            <ion-menu-toggle *ngIf="hideButton == false" autoHide="false">
             <ion-item>
-                
+
               </ion-item>
             </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
             <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
-                <ion-icon slot="start" [name]="run"></ion-icon>
+                <ion-icon slot="start" [name]="'walk'"></ion-icon>
                 <ion-label>Trail</ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -33,10 +33,10 @@
             </ion-list>
             <ion-button type = "submit">Commencer session</ion-button>
           </form>
-          
+
           <ion-menu-toggle autoHide="false">
             <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormOrientation()>
-                <ion-icon slot="start" [name]='compass'></ion-icon>
+                <ion-icon slot="start" [name]="'compass'"></ion-icon>
                 <ion-label>Orientation</ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -50,7 +50,14 @@
             </ion-list>
             <ion-button type = "submit">Commencer session</ion-button>
           </form>
-        
+
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=disableShowForms()>
+                <ion-icon slot="start" [name]="'person'"></ion-icon>
+                <ion-label>Espace personnel</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
