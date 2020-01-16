@@ -1,7 +1,0 @@
-{
-  "name": "prorientation",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}

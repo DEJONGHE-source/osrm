@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'leaflet';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import 'leaflet-routing-machine';
 declare let L;
-import { mapbox } from 'lrm-mapbox';
 
 @Injectable({
   providedIn: 'root'

@@ -21,3 +21,12 @@
   <div #mapCanvas class="map-canvas" id="mapid"></div>
   <div id="mapid1"></div>
 </ion-content>
+
+<ion-footer>
+  <p>Chrono</p>
+  <ion-button (click)="observableTimer()" *ngIf="ShowStartButton == true">Start</ion-button>
+  <ion-button (click)="pauseTimer()" *ngIf="ShowPause == true">Pause</ion-button>
+  <ion-button (click)="resumeTimer()" *ngIf="ShowResume == true">Resume</ion-button>
+  <ion-button (click)="endTimer()" *ngIf="ShowEnd == true">Finish</ion-button>
+  <ion-label>{{time}}</ion-label>
+</ion-footer>
