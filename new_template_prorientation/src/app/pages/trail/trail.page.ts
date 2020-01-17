@@ -32,10 +32,6 @@ export class TrailPage implements OnInit {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
 
-
-      lat = 45.783943
-      long = 4.872659
-
       console.log(lat,long)
       var mymap = L.map('mapid').setView([lat, long], 13);
       var testMap = L.map('mapid1').setView([lat, long], 13);

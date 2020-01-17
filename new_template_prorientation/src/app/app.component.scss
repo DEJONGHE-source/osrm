@@ -13,3 +13,8 @@ ion-item {
     color: inherit;
   }
 }
+
+.ionlistScss{
+  max-height: 350px;
+  overflow-y: scroll;
+}

@@ -5,6 +5,7 @@ import 'leaflet-routing-machine';
 declare let L;
 import { mapbox } from 'lrm-mapbox';
 import { ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'map',
@@ -14,7 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 export class MapPage implements OnInit {
 
   constructor(
-    private route : ActivatedRoute
+    private route : ActivatedRoute,
+    private storage: Storage
     ) {
       this.route.params.subscribe((params)=> {
         console.log(params);
@@ -22,7 +24,7 @@ export class MapPage implements OnInit {
     }
 
   ngOnInit() {
-    
+
     var object1 = new Geolocation();
     object1.getCurrentPosition().then(async (resp) => {
       var lat=resp.coords.latitude
@@ -45,6 +47,30 @@ export class MapPage implements OnInit {
       watch.subscribe((data) => {
         var marker = L.marker([lat, long]).addTo(mymap1);
       });
+
+      var jsonInterest = null;
+      var tickedInterest = null;
+
+      this.storage.get('jsonInterest').then((res) =>{
+        jsonInterest = res;
+
+      });
+
+      this.storage.get('tickedInterest').then((res) =>{
+        tickedInterest = res;
+      });
+      if(tickedInterest != null){
+        console.log("ajajja")
+        for (let pas = 0; pas < tickedInterest.length; pas++) {
+          if(tickedInterest[pas]=="true"){
+                var marker = L.marker([jsonInterest[pas][0], jsonInterest[pas][1]]).addTo(mymap1);
+          }
+
+        }
+      }else{
+        console.log("dommage")
+      }
+
 
 
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {

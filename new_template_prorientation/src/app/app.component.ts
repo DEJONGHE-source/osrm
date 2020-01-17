@@ -142,7 +142,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  selectItem(item){
+  async selectItem(item){
     var id = 0;
     for(var i=0; i < this.jsonInterest.length; i++){
       if(item[2] == this.jsonInterest[i][2]){
@@ -157,11 +157,13 @@ export class AppComponent implements OnInit {
       this.tickedInterest[id] = "false"
       console.log("false")
     }
+    await this.storage.set(`tickedInterest`,this.tickedInterest);
   }
 
   enableShowFormTrail= () => {
-    this.show().then((res)=>{
+    this.show().then( async (res)=>{
       this.jsonInterest = res
+      await this.storage.set(`jsonInterest`,this.jsonInterest);
       console.log("async")
       for (var i = 0; i < res.length; i++) {
         this.tickedInterest.push("false");

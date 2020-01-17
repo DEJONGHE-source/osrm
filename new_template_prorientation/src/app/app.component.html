@@ -25,7 +25,7 @@
           </ion-menu-toggle>
 
           <form #distanceForm="ngForm" *ngIf="hideFormTrail == false" (ngSubmit)="onClickSubmitTrail(distanceForm)">
-            <ion-list>
+            <ion-list class=ionlistScss>
               <ion-item>
                 <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
                 <ion-input name="distanceTrail" type="number" placeholder="distance" ngModel required></ion-input>
