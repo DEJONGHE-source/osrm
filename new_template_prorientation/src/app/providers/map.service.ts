@@ -19,11 +19,11 @@ export class MapService {
     for (var i = 0; i < dimensions[0]; ++i) {
       array.push(dimensions.length == 1 ? 0 : this.zeros(dimensions.slice(1)));
     }
-
+    
     return array;
   }
 
-  public tsp = (lat,long,target) => {
+  public tsp = (lat,long,target,tickedInterest) => {
 
     return new Promise(async (resolve,reject) => {
 
@@ -32,6 +32,7 @@ export class MapService {
       formData.append('long', long.toString());
       formData.append('lat', lat.toString());
       formData.append('distTarget', target.toString());
+      formData.append('tickedInterest',tickedInterest.toString());
       var reqDistances = new XMLHttpRequest();
       reqDistances.responseType = "json";
       reqDistances.open('POST', urlDistances, true);

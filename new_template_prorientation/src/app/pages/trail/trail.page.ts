@@ -32,6 +32,10 @@ export class TrailPage implements OnInit {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
 
+
+      lat = 45.783943
+      long = 4.872659
+
       console.log(lat,long)
       var mymap = L.map('mapid').setView([lat, long], 13);
       var testMap = L.map('mapid1').setView([lat, long], 13);
@@ -68,12 +72,19 @@ export class TrailPage implements OnInit {
 
       var target = 1;
 
+      var tickedInterest = new Array();
+
       await this.storage.get('distanceCoursePied').then((res) =>{
         target = res;
 
       });
 
-      this.mapService.tsp(lat,long,target).then((res)=>{
+      await this.storage.get('tickedInterest').then((res) =>{
+        tickedInterest = res;
+
+      });
+
+      this.mapService.tsp(lat,long,target,tickedInterest).then((res)=>{
         console.log("res");
         console.log(res);
         var order = res[0];

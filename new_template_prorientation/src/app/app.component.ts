@@ -29,6 +29,8 @@ export class AppComponent implements OnInit {
   target = '5000';
   dataForm : string;
   distance  = new FormControl();
+  jsonInterest = null;
+  tickedInterest = new Array();
 
   constructor(
     private menu: MenuController,
@@ -115,7 +117,57 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/tutorial');
   }
 
-  enableShowFormTrail = () => {
+  show(){
+    return new Promise((resolve,reject)=>{
+      var url = 'http://51.91.111.135:8080/';
+      var req = new XMLHttpRequest();
+      req.responseType = "json";
+      req.open('GET', url, true);
+      req.send();
+      console.log("ok get")
+
+      req.addEventListener('readystatechange', function() {
+        if(req.readyState === XMLHttpRequest.DONE) {
+          req.onload = function () {
+            console.log(req.response);
+            var jsonInterest = req.response;
+            if(jsonInterest != null){
+              resolve(jsonInterest);
+            }else{
+              reject("echec");
+            }
+          }
+        }
+      });
+    });
+  }
+
+  selectItem(item){
+    var id = 0;
+    for(var i=0; i < this.jsonInterest.length; i++){
+      if(item[2] == this.jsonInterest[i][2]){
+        id = i;
+      }
+    }
+    console.log(id)
+    if(this.tickedInterest[id] == "false"){
+      this.tickedInterest[id] = "true"
+      console.log("true")
+    }else{
+      this.tickedInterest[id] = "false"
+      console.log("false")
+    }
+  }
+
+  enableShowFormTrail= () => {
+    this.show().then((res)=>{
+      this.jsonInterest = res
+      console.log("async")
+      for (var i = 0; i < res.length; i++) {
+        this.tickedInterest.push("false");
+        console.log("ajouté")
+      }
+    });
     this.hideFormTrail = false;
     this.hideFormOrientation = true;
   }
@@ -135,6 +187,7 @@ export class AppComponent implements OnInit {
   async onClickSubmitTrail(form : NgForm) {
     this.distanceSubmit= true;
     await this.storage.set(`distanceCoursePied`,form.value.distanceTrail);
+    await this.storage.set(`tickedInterest`,this.tickedInterest);
     this.router.navigateByUrl('/app/tabs/Trail');
   }
 

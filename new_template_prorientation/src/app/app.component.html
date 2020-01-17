@@ -30,6 +30,10 @@
                 <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
                 <ion-input name="distanceTrail" type="number" placeholder="distance" ngModel required></ion-input>
               </ion-item>
+              <ion-item *ngFor="let item of jsonInterest;">
+                <ion-checkbox checked="false" (click)="selectItem(item)"></ion-checkbox>
+                <ion-label>{{item[2]}}</ion-label>
+              </ion-item>
             </ion-list>
             <ion-button type = "submit">Commencer session</ion-button>
           </form>
