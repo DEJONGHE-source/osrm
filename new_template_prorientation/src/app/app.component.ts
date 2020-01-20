@@ -165,7 +165,7 @@ export class AppComponent implements OnInit {
       this.jsonInterest = res
       await this.storage.set(`jsonInterest`,this.jsonInterest);
       console.log("async")
-      for (var i = 0; i < res.length; i++) {
+      for (var i = 0; i < this.jsonInterest.length; i++) {
         this.tickedInterest.push("false");
         console.log("ajouté")
       }
@@ -187,6 +187,7 @@ export class AppComponent implements OnInit {
   }
 
   async onClickSubmitTrail(form : NgForm) {
+    console.log("ahahahahha")
     this.distanceSubmit= true;
     await this.storage.set(`distanceCoursePied`,form.value.distanceTrail);
     await this.storage.set(`tickedInterest`,this.tickedInterest);

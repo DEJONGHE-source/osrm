@@ -12,7 +12,14 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
 
+import { AuthenticateService } from './providers/authentication.service';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import * as firebase from 'firebase';
+
+firebase.initializeApp(environment.firebase);
 @NgModule({
   imports: [
     BrowserModule,
