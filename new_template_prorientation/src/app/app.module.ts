@@ -10,14 +10,18 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { AngularFireModule } from '@angular/fire';
-
-import { AuthenticateService } from './providers/authentication.service';
+import { environment } from '../environments/environment';
+import { AuthenticateService } from './pages/services/authentication.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireModule} from 'angularfire2';
+
 
 import * as firebase from 'firebase';
+
 
 firebase.initializeApp(environment.firebase);
 @NgModule({
@@ -28,12 +32,15 @@ firebase.initializeApp(environment.firebase);
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
+    AngularFireAuthModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
   ],
   declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AuthenticateService, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

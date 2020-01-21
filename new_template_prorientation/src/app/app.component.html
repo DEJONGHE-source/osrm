@@ -18,7 +18,7 @@
             </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
+            <ion-item [routerLink]="'/app/tabs/map'" routerLinkActive="true" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
                 <ion-icon slot="start" [name]="'walk'"></ion-icon>
                 <ion-label>Trail</ion-label>
             </ion-item>
@@ -36,7 +36,7 @@
               </ion-item>
             </ion-list>
             <ion-button type = "submit">Commencer session</ion-button>
-            
+
           </form>
 
           <ion-menu-toggle autoHide="false">
@@ -118,7 +118,7 @@
 
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
+            <ion-item routerLink="/register" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
                 Inscription

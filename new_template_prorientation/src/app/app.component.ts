@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
   enableShowFormTrail= () => {
     this.show().then( async (res)=>{
       this.jsonInterest = res
-      await this.storage.set(`jsonInterest`,this.jsonInterest);
+      
       console.log("async")
       for (var i = 0; i < this.jsonInterest.length; i++) {
         this.tickedInterest.push("false");

@@ -2,14 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
-    path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignUpModule)
-  },
+
   {
     path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
@@ -34,6 +27,9 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
   },
+ { path: 'login', loadChildren: ()=> import('./pages/login/login.module').then(m=>m.LoginPageModule) },
+ { path: 'register', loadChildren: ()=> import ('./pages/register/register.module').then(m=>m.RegisterPageModule) }
+ //{ path: 'dashboard', loadChildren:()=> import('./pages/dashboard/dashboard.module').then(m=>m.DashboardPageModule) }
 ];
 
 @NgModule({
