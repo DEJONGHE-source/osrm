@@ -30,6 +30,20 @@ export class MapPage implements OnInit {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
       console.log(lat,long)
+
+      // var container = L.DomUtil.get('mapid1');
+      // if (container != null){
+      //   console.log("rentre");
+      //   container._leaflet_id = null;
+      //
+      // }
+      //
+      // var container2 = L.DomUtil.get('mapid11');
+      // if (container2 != null){
+      //   console.log("rentre1");
+      //   container2._leaflet_id = null;
+      // }
+
       var mymap1 = L.map('mapid1').setView([lat, long], 13);
       var maptest1 = L.map('mapid11').setView([lat, long], 13);
 

@@ -73,8 +73,14 @@ export class OrientationPage implements OnInit {
           target = res;
 
         });
+        var tickedInterest = new Array();
+        await this.storage.get('tickedInterest').then((res) =>{
+          tickedInterest = res;
 
-        this.mapService.tsp(lat,long,target).then((res)=>{
+        });
+
+
+        this.mapService.tsp(lat,long,target,tickedInterest).then((res)=>{
           console.log("res");
           console.log(res);
           var order = res[0];

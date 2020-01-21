@@ -175,6 +175,15 @@ export class AppComponent implements OnInit {
   }
 
   enableShowFormOrientation = () => {
+      this.show().then( async (res)=>{
+        this.jsonInterest = res
+        await this.storage.set(`jsonInterest`,this.jsonInterest);
+        console.log("async")
+        for (var i = 0; i < this.jsonInterest.length; i++) {
+          this.tickedInterest.push("false");
+          console.log("ajouté")
+        }
+      });
       this.hideFormOrientation = false;
       this.hideFormTrail = true;
   }
@@ -189,9 +198,17 @@ export class AppComponent implements OnInit {
   async onClickSubmitTrail(form : NgForm) {
     console.log("ahahahahha")
     this.distanceSubmit= true;
+
     await this.storage.set(`distanceCoursePied`,form.value.distanceTrail);
     await this.storage.set(`tickedInterest`,this.tickedInterest);
-    this.router.navigateByUrl('/app/tabs/Trail');
+    await window.location.replace("http://localhost:8100/app/tabs/Trail");
+    console.log('aaaaaaassasawasasasas')
+  }
+
+  async refreshSession(){
+    await this.show();
+    await window.location.replace("http://localhost:8100");
+    console.log("apres")
   }
 
   async onClickSubmitOrientation(form : NgForm) {

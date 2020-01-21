@@ -17,7 +17,6 @@ import { Storage } from '@ionic/storage';
 })
 
 export class TrailPage implements OnInit {
-
   constructor(
     private mapService : MapService,
     private route : ActivatedRoute,
@@ -33,6 +32,19 @@ export class TrailPage implements OnInit {
       var long=resp.coords.longitude
 
       console.log(lat,long)
+      /*var container = L.DomUtil.get('mapid');
+      if (container != null){
+        console.log("rentre");
+        container._leaflet_id = null;
+
+      }
+
+      var container2 = L.DomUtil.get('mapid1');
+      if (container2 != null){
+        console.log("rentre1");
+        container2._leaflet_id = null;
+      }
+*/
       var mymap = L.map('mapid').setView([lat, long], 13);
       var testMap = L.map('mapid1').setView([lat, long], 13);
 
