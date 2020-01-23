@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
   enableShowFormTrail= () => {
     this.show().then( async (res)=>{
       this.jsonInterest = res
-      
+
       console.log("async")
       for (var i = 0; i < this.jsonInterest.length; i++) {
         this.tickedInterest.push("false");
@@ -214,7 +214,8 @@ export class AppComponent implements OnInit {
   async onClickSubmitOrientation(form : NgForm) {
     this.distanceSubmit= true;
     await this.storage.set(`distanceOrientation`,form.value.distance);
-    this.router.navigateByUrl('/app/tabs/Orientation');
+    await this.storage.set(`tickedInterest`,this.tickedInterest);
+    await window.location.replace("http://localhost:8100/app/tabs/Orientation");
   }
 
 

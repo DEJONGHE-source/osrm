@@ -34,8 +34,8 @@ export class OrientationPage implements OnInit {
         var long=resp.coords.longitude
 
         console.log(lat,long)
-        var mymap = L.map('mapid2').setView([lat, long], 13);
-        var testMap = L.map('mapid12').setView([lat, long], 13);
+        var mymap = L.map('orientation').setView([lat, long], 13);
+        var testMap = L.map('orientation1').setView([lat, long], 13);
 
         mymap.locate({
           watch:true,

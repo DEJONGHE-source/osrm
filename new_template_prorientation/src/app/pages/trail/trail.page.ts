@@ -45,8 +45,8 @@ export class TrailPage implements OnInit {
         container2._leaflet_id = null;
       }
 */
-      var mymap = L.map('mapid').setView([lat, long], 13);
-      var testMap = L.map('mapid1').setView([lat, long], 13);
+      var mymap = L.map('trail').setView([lat, long], 13);
+      var testMap = L.map('trail1').setView([lat, long], 13);
 
       mymap.locate({
         watch:true,

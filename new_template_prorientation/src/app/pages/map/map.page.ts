@@ -44,14 +44,14 @@ export class MapPage implements OnInit {
       //   container2._leaflet_id = null;
       // }
 
-      var mymap1 = L.map('mapid1').setView([lat, long], 13);
-      var maptest1 = L.map('mapid11').setView([lat, long], 13);
+      var mymap1 = L.map('map').setView([lat, long], 13);
+      var maptest1 = L.map('map1').setView([lat, long], 13);
 
       mymap1.locate({
         watch:true,
 
       });
-
+ 
       maptest1.locate({
         watch:true,
 
