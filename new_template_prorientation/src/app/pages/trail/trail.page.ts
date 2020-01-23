@@ -153,8 +153,7 @@ export class TrailPage implements OnInit {
           }
         }
 
-        console.log("coordConservedNodes");
-        console.log(coordConservedNodes);
+
 
         for(i=0; i < coordConservedNodes.length ;i++){
           for(j=0; j < coordConservedNodes.length ;j++){
@@ -165,8 +164,7 @@ export class TrailPage implements OnInit {
         }
 
 
-        console.log("pointsWay")
-        console.log(pointsWay)
+
 
         var routeControl = L.Routing.control({
           waypoints: pointsWay,
@@ -187,15 +185,18 @@ export class TrailPage implements OnInit {
 
   }
   addTrailToFirebase(){
+    var date = new Date();
+
     this.connected=this.connectedService.userDetails();
-    console.log("connected ou pas");
+
     if(this.connected != null && this.connected!=undefined){
-      console.log("connecté")
+
       this.afs.collection('/seances').add({
         distance:this.total_distance,
         id_user:this.connected.uid,
         time:this.time.toString(),
-        type:"trail"
+        type:"trail",
+        date:date_form
 
       })
     }
@@ -207,9 +208,6 @@ export class TrailPage implements OnInit {
 
     var run_info = document.getElementById('footer');
     var button_bottom = document.getElementById('button-bottom');
-
-
-    console.log("test ",this.showInfos);
 
     if ( this.showInfos ) {
       run_info.style.height='30%';
@@ -233,13 +231,13 @@ export class TrailPage implements OnInit {
     var getdistance = this.getDistance(e);
     this.total_distance = this.total_distance + getdistance[0];
     if (getdistance[1] == undefined || getdistance[2]== undefined) {
-      console.log("s'en ba les couilles frere");
+
     } else {
       this.lat = getdistance[1];
       this.long = getdistance[2];
     }
 
-    console.log("resutls =",getdistance);
+
 
   }
 
@@ -263,7 +261,7 @@ export class TrailPage implements OnInit {
           req.onload = function () {
 
             var new_distance = req.response.routes[0].distance;
-            console.log(" distance ", new_distance);
+
 
             if(new_distance!= null){
               if (new_distance != 0) {
@@ -284,18 +282,11 @@ export class TrailPage implements OnInit {
  }
 
 
-
-
-
-
-
-
     observableTimer = () => {
       const source = timer(1000, 1000);
       this.ShowStartButton = false;
       this.ShowEnd = true;
       this.ShowPause = true;
-
       if (this.paused == true) {
         this.sub = source.subscribe(val => {
           console.log(val, '-');
@@ -311,7 +302,7 @@ export class TrailPage implements OnInit {
       this.ShowResume = true;
       this.continue = false;
       this.prec_time = this.time;
-      console.log('prec_time =',this.prec_time);
+
       this.sub.unsubscribe();
     }
 
@@ -320,9 +311,9 @@ export class TrailPage implements OnInit {
       this.continue = true;
       this.ShowPause = true;
       this.ShowResume = false;
-      console.log('bitch');
+
       this.sub = source.subscribe(val => {
-        console.log(val, '-',"prec_time",this.prec_time);
+
         if (this.continue == true) {
           this.time = val + this.prec_time;
         }
