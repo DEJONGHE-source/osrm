@@ -24,12 +24,35 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
-    <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
 
   </ion-item>
 
-<ion-label> {{first_name}}</ion-label>
-<ion-label> {{last_name}}</ion-label>
-<ion-label> {{numberOfSeances}}</ion-label>
+
+  <ion-grid >
+    <ion-row class="ion-align-items-stretch">
+      <ion-col size="12" size-md="4" *ngFor="let item of seances">
+        <ion-card class="speaker-card">
+          <ion-card-header>
+            <ion-item>
+              seances
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                {{item[0]}}
+              </ion-item>
+              <ion-item>
+                {{item[1]}}
+              </ion-item>
+              <ion-item>
+                {{item[2]}}
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

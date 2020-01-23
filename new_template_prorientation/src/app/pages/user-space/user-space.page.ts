@@ -11,7 +11,7 @@ export class UserSpacePage implements OnInit {
   connected=null
   first_name=null
   last_name=null
-  numberOfSeances=0
+  seances = new Array()
   constructor(public connectedService : AuthenticateService) { }
 
   ngOnInit() {
@@ -20,7 +20,6 @@ export class UserSpacePage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.numberOfSeances=0
       this.getConnected().then(async ()=>{
       console.log("connected ou pas");
       if(this.connected != null && this.connected!=undefined){
@@ -28,8 +27,11 @@ export class UserSpacePage implements OnInit {
         const snapshot = await firebase.firestore().collection('/seances').where("id_user","==",this.connected.uid).get()
         snapshot.docs.map(doc => {
           if(doc.data().id_user==this.connected.uid){
-
-            this.numberOfSeances=this.numberOfSeances+1;
+            var local = new Array();
+            local.push(doc.data().distance);
+            local.push(doc.data().time);
+            local.push(doc.data().type);
+            this.seances.push(local);
           }
         });
         const snapshot1 = await firebase.firestore().collection('/utilisateurs').where("id_user","==",this.connected.uid).get()
@@ -37,7 +39,9 @@ export class UserSpacePage implements OnInit {
           this.first_name=doc.data().first_name;
           this.last_name=doc.data().last_name;
         });
+        console.log(this.seances)
         return 'true';
+
       }else{
         console.log('non connecté')
         return 'false';
