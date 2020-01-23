@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { AuthenticateService } from './pages/services/authentication.service';
+
 
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit {
   distance  = new FormControl();
   jsonInterest = null;
   tickedInterest = new Array();
+  connected=null
 
   constructor(
     private menu: MenuController,
@@ -42,14 +45,21 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private activatedRoute : ActivatedRoute
+    private activatedRoute : ActivatedRoute,
+    public connectedService : AuthenticateService
   ) {
     this.initializeApp();
   }
 
   async ngOnInit() {
 
-
+    this.connected=this.connectedService.userDetails();
+    console.log("connected ou pas");
+    if(this.connected != null && this.connected!=undefined){
+      console.log("connecté")
+    }else{
+      console.log('non connecté')
+    }
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
@@ -216,6 +226,18 @@ export class AppComponent implements OnInit {
     await this.storage.set(`distanceOrientation`,form.value.distance);
     await this.storage.set(`tickedInterest`,this.tickedInterest);
     await window.location.replace("http://localhost:8100/app/tabs/Orientation");
+  }
+
+  isConnected(){
+    this.connected=this.connectedService.userDetails();
+    console.log("connected ou pas");
+    if(this.connected != null && this.connected!=undefined){
+      console.log("connecté")
+      return 'true';
+    }else{
+      console.log('non connecté')
+      return 'false';
+    }
   }
 
 

@@ -52,9 +52,9 @@ export class LoginPage implements OnInit {
   loginUser(value){
     this.authService.loginUser(value)
     .then(res => {
-      console.log(res);
+      console.log(res.user.uid);
       this.errorMessage = "";
-      this.navCtrl.navigateForward('/dashboard');
+      this.navCtrl.navigateForward('');
     }, err => {
       this.errorMessage = err.message;
     })

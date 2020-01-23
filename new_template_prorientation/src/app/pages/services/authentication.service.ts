@@ -13,10 +13,9 @@ export class AuthenticateService {
      .then((res)=>{
 
        this.afs.collection('/utilisateurs').add({
-         birthdate:"23/07/1997",
-         first_name:'lucas',
+         first_name:value.first_name,
          id_user:res.user.uid.toString(),
-         last_name:"laaaaal"
+         last_name:value.last_name
 
        })}).then(
          res=>resolve(res),

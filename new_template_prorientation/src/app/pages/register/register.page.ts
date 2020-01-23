@@ -25,7 +25,11 @@ export class RegisterPage implements OnInit {
      { type: 'required', message: 'Password is required.' },
      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
    ],
-   'name':[
+   'first_name':[
+     { type: 'required', message: 'Name is required.' },
+     { type: 'minlength', message: 'Enter a valid name' }
+   ],
+   'last_name':[
      { type: 'required', message: 'Name is required.' },
      { type: 'minlength', message: 'Enter a valid name' }
    ]
@@ -47,7 +51,11 @@ export class RegisterPage implements OnInit {
         Validators.minLength(5),
         Validators.required
       ])),
-      name:new FormControl('', Validators.compose([
+      first_name:new FormControl('', Validators.compose([
+        Validators.minLength(1),
+        Validators.required
+      ])),
+      last_name:new FormControl('', Validators.compose([
         Validators.minLength(1),
         Validators.required
       ]))

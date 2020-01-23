@@ -51,7 +51,7 @@ export class MapPage implements OnInit {
         watch:true,
 
       });
- 
+  
       maptest1.locate({
         watch:true,
 
