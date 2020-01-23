@@ -19,21 +19,20 @@ export class UserSpacePage implements OnInit {
 
   }
 
-  async ionViewWillEnter(){
+  ionViewWillEnter(){
     this.numberOfSeances=0
-      this.getConnected().then(()=>{
+      this.getConnected().then(async ()=>{
       console.log("connected ou pas");
       if(this.connected != null && this.connected!=undefined){
         console.log("connecté")
-        const snapshot = firebase.firestore().collection('/seances').where("id_user","==",this.connected.uid).get()
+        const snapshot = await firebase.firestore().collection('/seances').where("id_user","==",this.connected.uid).get()
         snapshot.docs.map(doc => {
           if(doc.data().id_user==this.connected.uid){
 
             this.numberOfSeances=this.numberOfSeances+1;
-          }else{
           }
         });
-        const snapshot1 = firebase.firestore().collection('/utilisateurs').where("id_user","==",this.connected.uid).get()
+        const snapshot1 = await firebase.firestore().collection('/utilisateurs').where("id_user","==",this.connected.uid).get()
         snapshot1.docs.map(doc => {
           this.first_name=doc.data().first_name;
           this.last_name=doc.data().last_name;

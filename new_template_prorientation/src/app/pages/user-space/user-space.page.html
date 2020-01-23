@@ -9,6 +9,21 @@
     <img src="assets/img/users/user.png">
   </div>
   <ion-item>
+    <ion-card>
+      <ion-card-header>
+        <ion-item detail="false">
+          Informations personnelles
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item detail="false">
+          Nom : {{last_name}}
+        </ion-item>
+        <ion-item detail="false">
+          Prenom : {{first_name}}
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
     <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
 
   </ion-item>
