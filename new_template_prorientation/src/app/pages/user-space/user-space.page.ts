@@ -9,6 +9,9 @@ import * as firebase from 'firebase/app';
 })
 export class UserSpacePage implements OnInit {
   connected=null
+  first_name=null
+  last_name=null
+
   constructor(public connectedService : AuthenticateService) { }
 
   ngOnInit() {
@@ -22,17 +25,14 @@ export class UserSpacePage implements OnInit {
     if(this.connected != null && this.connected!=undefined){
       console.log("connecté")
 
-      const snapshot = await firebase.firestore().collection('utilisateurs').get().then(doc=>{
-        snapshot.docs.map(doc => {
-          console.log("avant if")
-          console.log(doc.data().uid)
-          if(doc.data().uid==this.connected.uid){
-            console.log(doc.data().first_name)
-          }else{
-            console.log("noooooon")
-          }
+      const snapshot = await firebase.firestore().collection('utilisateurs').get()
+      snapshot.docs.map(doc => {
+        if(doc.data().id_user==this.connected.uid){
+          this.first_name=doc.data().first_name
+          this.last_name=doc.data().last_name
+        }else{
+        }
       });
-    });
 
 
 
