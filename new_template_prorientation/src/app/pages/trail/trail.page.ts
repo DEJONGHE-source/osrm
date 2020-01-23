@@ -12,6 +12,7 @@ import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticateService } from '../services/authentication.service';
 import { timer } from 'rxjs';
+import { Router} from '@angular/router';
 
 
 
@@ -42,7 +43,8 @@ export class TrailPage implements OnInit {
     private route : ActivatedRoute,
     private storage: Storage,
     public afs: AngularFirestore,
-    public connectedService : AuthenticateService
+    public connectedService : AuthenticateService,
+    private router: Router,
     ) {}
 
 
@@ -190,13 +192,15 @@ export class TrailPage implements OnInit {
     if(this.connected != null && this.connected!=undefined){
       console.log("connecté")
       this.afs.collection('/seances').add({
-        distance:10,
+        distance:this.total_distance,
         id_user:this.connected.uid,
-        time:'20',
+        time:this.time.toString(),
         type:"trail"
 
       })
     }
+    this.router.navigateByUrl('/app/tabs/Personal');
+
   }
 
   transition = () => {

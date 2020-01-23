@@ -45,9 +45,9 @@
               <ion-button (click)="pauseTimer()" *ngIf="ShowPause == true">Pause</ion-button>
               <ion-button (click)="resumeTimer()" *ngIf="ShowResume == true">Resume</ion-button>
             </ion-item>
-              <ion-button (click)="finishTimer()" *ngIf="ShowEnd == true">Finish</ion-button>
-            <ion-item>
 
+            <ion-item>
+              <ion-button (click)="addTrailToFirebase()" *ngIf="ShowEnd == true">Finish</ion-button>
             </ion-item>
 
           </ion-list>
