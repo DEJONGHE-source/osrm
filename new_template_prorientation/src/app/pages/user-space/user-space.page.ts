@@ -24,8 +24,7 @@ export class UserSpacePage implements OnInit {
     console.log("connected ou pas");
     if(this.connected != null && this.connected!=undefined){
       console.log("connecté")
-
-      const snapshot = await firebase.firestore().collection('utilisateurs').get()
+      const snapshot = await firebase.firestore().collection('utilisateurs').where("id_user","==",this.connected.uid).get()
       snapshot.docs.map(doc => {
         if(doc.data().id_user==this.connected.uid){
           this.first_name=doc.data().first_name

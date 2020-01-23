@@ -8,6 +8,11 @@ import { MapService } from '../../providers/map.service';
 import { cpus } from 'os';
 import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import * as firebase from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthenticateService } from '../services/authentication.service';
+import { timer } from 'rxjs';
+
 
 
 @Component({
@@ -17,10 +22,27 @@ import { Storage } from '@ionic/storage';
 })
 
 export class TrailPage implements OnInit {
+  connected=null
+  time = 0;
+  ShowStartButton = true;
+  ShowPause = false;
+  ShowEnd = false;
+  ShowResume = false;
+  continue = true;
+  prec_time = 0;
+  paused = true;
+  sub;
+  showInfos = true;
+  infos;
+  total_distance = 0;
+  lat=0;
+  long=0;
   constructor(
     private mapService : MapService,
     private route : ActivatedRoute,
-    private storage: Storage
+    private storage: Storage,
+    public afs: AngularFirestore,
+    public connectedService : AuthenticateService
     ) {}
 
 
@@ -28,10 +50,10 @@ export class TrailPage implements OnInit {
 
     var object = new Geolocation();
     object.getCurrentPosition().then(async (resp) => {
-      var lat=resp.coords.latitude
-      var long=resp.coords.longitude
+      this.lat=resp.coords.latitude
+      this.long=resp.coords.longitude
 
-      console.log(lat,long)
+      console.log(this.lat,this.long)
       /*var container = L.DomUtil.get('mapid');
       if (container != null){
         console.log("rentre");
@@ -45,8 +67,8 @@ export class TrailPage implements OnInit {
         container2._leaflet_id = null;
       }
 */
-      var mymap = L.map('trail').setView([lat, long], 13);
-      var testMap = L.map('trail1').setView([lat, long], 13);
+      var mymap = L.map('trail').setView([this.lat, this.long], 13);
+      var testMap = L.map('trail1').setView([this.lat, this.long], 13);
 
       mymap.locate({
         watch:true,
@@ -60,8 +82,14 @@ export class TrailPage implements OnInit {
 
       let watch = object.watchPosition();
       watch.subscribe((data) => {
-        var marker = L.marker([lat, long]).addTo(mymap);
+        var marker = L.marker([this.lat, this.long]).addTo(mymap);
       });
+
+
+
+
+
+      mymap.on('locationfound',this.onLocationFound);
 
 
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -92,7 +120,7 @@ export class TrailPage implements OnInit {
 
       });
 
-      this.mapService.tsp(lat,long,target,tickedInterest).then((res)=>{
+      this.mapService.tsp(this.lat,this.long,target,tickedInterest).then((res)=>{
         console.log("res");
         console.log(res);
         var order = res[0];
@@ -149,11 +177,152 @@ export class TrailPage implements OnInit {
       });
 
 
-
-
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+
+
+
   }
+  addTrailToFirebase(){
+    this.connected=this.connectedService.userDetails();
+    console.log("connected ou pas");
+    if(this.connected != null && this.connected!=undefined){
+      console.log("connecté")
+      this.afs.collection('/seances').add({
+        distance:10,
+        id_user:this.connected.uid,
+        time:'20',
+        type:"trail"
+
+      })
+    }
+  }
+
+  transition = () => {
+
+    var run_info = document.getElementById('footer');
+    var button_bottom = document.getElementById('button-bottom');
+
+
+    console.log("test ",this.showInfos);
+
+    if ( this.showInfos ) {
+      run_info.style.height='30%';
+      button_bottom.style.bottom='35%';
+
+      this.showInfos = false;
+
+    } else {
+
+      run_info.style.height='0%';
+      button_bottom.style.bottom='10%';
+
+      this.showInfos = true;
+
+    }
+
+  }
+
+  onLocationFound = (e) => {
+
+    var getdistance = this.getDistance(e);
+    this.total_distance = this.total_distance + getdistance[0];
+    if (getdistance[1] == undefined || getdistance[2]== undefined) {
+      console.log("s'en ba les couilles frere");
+    } else {
+      this.lat = getdistance[1];
+      this.long = getdistance[2];
+    }
+
+    console.log("resutls =",getdistance);
+
+  }
+
+  getDistance = (e) =>{
+    return new Promise((resolve,reject) => {
+
+      var lat = 0;
+      var long = 0;
+
+      var new_pos = e.latlng;
+
+      var url = 'http://51.77.212.33:8080/route/v1/foot/'+new_pos.lng+','+new_pos.lat+';'+this.long+','+this.lat
+
+      var req = new XMLHttpRequest();
+      req.responseType = "json";
+      req.open('GET', url, true);
+      req.send();
+
+      var get_distance = req.addEventListener('readystatechange', function() {
+        if(req.readyState === XMLHttpRequest.DONE) {
+          req.onload = function () {
+
+            var new_distance = req.response.routes[0].distance;
+            console.log(" distance ", new_distance);
+
+            if(new_distance!= null){
+              if (new_distance != 0) {
+                lat = new_pos.lat;
+                long = new_pos.lng;
+              } else {
+                lat = 0;
+                long = 0;
+              }
+              resolve([new_distance,lat,long]);
+            }else{
+              reject("echec");
+            }
+          }
+        }
+      });
+   });
+ }
+
+
+
+
+
+
+
+
+    observableTimer = () => {
+      const source = timer(1000, 1000);
+      this.ShowStartButton = false;
+      this.ShowEnd = true;
+      this.ShowPause = true;
+
+      if (this.paused == true) {
+        this.sub = source.subscribe(val => {
+          console.log(val, '-');
+          if (this.continue == true) {
+            this.time = val + this.prec_time;
+          }
+        })
+      }
+    }
+
+    pauseTimer = () => {
+      this.ShowPause = false;
+      this.ShowResume = true;
+      this.continue = false;
+      this.prec_time = this.time;
+      console.log('prec_time =',this.prec_time);
+      this.sub.unsubscribe();
+    }
+
+    resumeTimer = () => {
+      const source = timer(1000, 1000);
+      this.continue = true;
+      this.ShowPause = true;
+      this.ShowResume = false;
+      console.log('bitch');
+      this.sub = source.subscribe(val => {
+        console.log(val, '-',"prec_time",this.prec_time);
+        if (this.continue == true) {
+          this.time = val + this.prec_time;
+        }
+      })
+    }
 
 }
