@@ -5,9 +5,6 @@
 </ion-header>
 
 <ion-content>
-  <div class="user-logo">
-    <img src="assets/img/users/user.png">
-  </div>
   <ion-item>
     <ion-card>
       <ion-card-header>
@@ -16,6 +13,11 @@
         </ion-item>
       </ion-card-header>
       <ion-card-content>
+        <ion-item *ngIf="isConnected()" detail="false">
+          <div class="user-logo">
+            <img src="assets/img/users/hugo.png">
+          </div>
+        </ion-item>
         <ion-item detail="false">
           Nom : {{last_name}}
         </ion-item>
@@ -54,5 +56,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <canvas id="myChart"></canvas>
+
 
 </ion-content>

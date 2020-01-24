@@ -8,8 +8,47 @@
 
     opacity: 1;
     transition: opacity 150ms ease-in;
+    z-index: 10;
   }
 
   .show-map {
     opacity: 1;
+  }
+
+  .utils {
+    position: absolute;
+    right: 80%;
+    color: white;
+    z-index: 40;
+
+  }
+
+  .chrono {
+    position: absolute;
+    bottom: 10%;
+    opacity: 1;
+  }
+
+  .button {
+    position: absolute;
+
+  }
+
+  #footer {
+    position: absolute;
+    height: 0%;
+    width: 50%;
+    bottom:0%;
+   align-items: center;
+
+    background-color: transparent;
+    opacity:1;
+    z-index: 30;
+  }
+
+  #button-bottom {
+    position: absolute;
+    bottom:10%;
+    right: 50%;
+    z-index: 20;
   }

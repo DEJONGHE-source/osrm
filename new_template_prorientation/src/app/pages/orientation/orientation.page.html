@@ -21,3 +21,84 @@
   <div #mapCanvas class="map-canvas" id="orientation"></div>
   <div id="orientation1"></div>
 </ion-content>
+
+
+
+
+
+<div id="button-bottom">
+  <ion-button class="button button-block button-energized" (click)="transition()">Infos</ion-button>
+</div>
+
+  <ion-row class="ion-align-items-stretch" id="footer">
+    <ion-col size="12" size-md="6">
+      <ion-card id="chrono">
+        <ion-card-header>
+          <ion-item detail="false" lines="none">
+            Chrono
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <h2>{{time}}</h2>
+            </ion-item>
+            <ion-item>
+              <ion-button (click)="observableTimer()" *ngIf="ShowStartButton == true">Start</ion-button>
+              <ion-button (click)="pauseTimer()" *ngIf="ShowPause == true">Pause</ion-button>
+              <ion-button (click)="resumeTimer()" *ngIf="ShowResume == true">Resume</ion-button>
+            </ion-item>
+
+            <ion-item>
+              <ion-button (click)="addOrientationToFirebase()" *ngIf="ShowEnd == true">Finish</ion-button>
+            </ion-item>
+
+          </ion-list>
+        </ion-card-content>
+
+
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6">
+      <ion-card id="chrono">
+        <ion-card-header>
+          <ion-item detail="false" lines="none">
+            distance
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <h2>{{total_distance}}</h2>
+            </ion-item>
+            <ion-item>
+              <h2>{{pourcentage}}</h2>
+            </ion-item>
+              <ion-button (click)="finishTimer()" *ngIf="ShowEnd == true">Finish</ion-button>
+            <ion-item>
+
+            </ion-item>
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+
+    <ion-card >
+      <ion-card-header>
+        <ion-item detail="false" lines="none">
+          localisations
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let c of coordsButtons;">
+            <ion-button >{{c}}</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-row>

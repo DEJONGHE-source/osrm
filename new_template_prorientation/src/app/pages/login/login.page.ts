@@ -52,7 +52,8 @@ export class LoginPage implements OnInit {
   loginUser(value){
     this.authService.loginUser(value)
     .then(res => {
-      console.log(res.user.uid);
+      console.log(res)
+      window.dispatchEvent(new CustomEvent('login'));
       this.errorMessage = "";
       this.navCtrl.navigateForward('');
     }, err => {

@@ -44,7 +44,7 @@ export class TrailPage implements OnInit {
     private storage: Storage,
     public afs: AngularFirestore,
     public connectedService : AuthenticateService,
-    private router: Router,
+    private router: Router
     ) {}
 
 
@@ -185,7 +185,9 @@ export class TrailPage implements OnInit {
 
   }
   addTrailToFirebase(){
-    var date = new Date();
+    var new_date = new Date();
+
+    var new_date_str = new_date.getFullYear()+'-'+new_date.getMonth() +'-'+new_date.getDate();
 
     this.connected=this.connectedService.userDetails();
 
@@ -196,7 +198,7 @@ export class TrailPage implements OnInit {
         id_user:this.connected.uid,
         time:this.time.toString(),
         type:"trail",
-        date:date_form
+        date:new_date_str
 
       })
     }
@@ -228,17 +230,19 @@ export class TrailPage implements OnInit {
 
   onLocationFound = (e) => {
 
-    var getdistance = this.getDistance(e);
-    this.total_distance = this.total_distance + getdistance[0];
-    if (getdistance[1] == undefined || getdistance[2]== undefined) {
+    var getdistance = this.getDistance(e).then((res) => {
 
-    } else {
-      this.lat = getdistance[1];
-      this.long = getdistance[2];
-    }
+      this.total_distance = this.total_distance + res[0];
 
 
+      if (res[0] == 0) {
 
+      } else {
+        this.lat = getdistance[1];
+        this.long = getdistance[2];
+      }
+
+    });
   }
 
   getDistance = (e) =>{
@@ -271,7 +275,7 @@ export class TrailPage implements OnInit {
                 lat = 0;
                 long = 0;
               }
-              resolve([new_distance,lat,long]);
+              resolve([10,lat,long]);
             }else{
               reject("echec");
             }

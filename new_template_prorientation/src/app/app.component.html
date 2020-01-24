@@ -3,12 +3,12 @@
 
     <ion-menu contentId="main-content">
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Pro'rientation</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content>
+      <ion-content color="primary">
         <ion-list lines="none">
 
            <ion-menu-toggle *ngIf="hideButton == false" autoHide="false">
@@ -18,31 +18,31 @@
             </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="'/app/tabs/map'" routerLinkActive="true" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
-                <ion-icon slot="start" [name]="'walk'"></ion-icon>
-                <ion-label>Trail</ion-label>
+            <ion-item [routerLink]="'/app/tabs/Trail'" routerLinkActive="true" routerDirection="root" detail="false" (click)=enableShowFormTrail()>
+                <ion-icon color="label" slot="start" [name]="'walk'"></ion-icon>
+                <ion-label color="label">Trail</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <form #distanceForm="ngForm" *ngIf="hideFormTrail == false" (ngSubmit)="onClickSubmitTrail(distanceForm)">
             <ion-list class=ionlistScss>
               <ion-item>
-                <ion-label position="stacked" color="primary">Entrer une distance</ion-label>
-                <ion-input name="distanceTrail" type="number" placeholder="distance" ngModel required></ion-input>
+                <ion-label position="stacked" color="label">Entrer une distance</ion-label>
+                <ion-input color="label" name="distanceTrail" type="number" placeholder="distance" ngModel required></ion-input>
               </ion-item>
               <ion-item *ngFor="let item of jsonInterest;">
                 <ion-checkbox checked="false" (click)="selectItem(item)"></ion-checkbox>
-                <ion-label>{{item[2]}}</ion-label>
+                <ion-label >{{item[2]}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button type = "submit">Commencer session</ion-button>
+            <ion-button class="button" type = "submit">Commencer session</ion-button>
 
           </form>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormOrientation()>
+            <ion-item [routerLink]="'/app/tabs/Orientation'" routerLinkActive="false" routerDirection="root" detail="false" (click)=enableShowFormOrientation()>
                 <ion-icon slot="start" [name]="'compass'"></ion-icon>
-                <ion-label>Orientation</ion-label>
+                <ion-label >Orientation</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
@@ -54,23 +54,25 @@
               </ion-item>
               <ion-item *ngFor="let item of jsonInterest;">
                 <ion-checkbox checked="false" (click)="selectItem(item)"></ion-checkbox>
-                <ion-label>{{item[2]}}</ion-label>
+                <ion-label class="label">{{item[2]}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button type = "submit">Commencer session</ion-button>
+            <ion-item>
+              <ion-button type = "submit">Commencer session</ion-button>
+            </ion-item>
           </form>
 
           <ion-menu-toggle autoHide="false">
             <ion-item [routerLink]="" routerLinkActive="false" routerDirection="root" detail="false" (click)=disableShowForms()>
-                <ion-icon slot="start" [name]="'person'"></ion-icon>
-                <ion-label>Espace personnel</ion-label>
+                <ion-icon color="label" slot="start" [name]="'person'"></ion-icon>
+                <ion-label color="secondary">Espace personnel</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
+              <ion-icon color="label" slot="start" [name]="p.icon"></ion-icon>
+              <ion-label color="label">
                 {{p.title}}
               </ion-label>
             </ion-item>
@@ -79,25 +81,15 @@
 
         </ion-list>
 
-        <ion-list *ngIf="loggedIn" lines="none">
-          <ion-list-header>
+        <ion-list *ngIf="isConnected()" lines="none">
+          <ion-list-header color="primary">
             Compte
           </ion-list-header>
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="person"></ion-icon>
-              <ion-label>
-                Compte
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-
 
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="logout()" detail="false">
-              <ion-icon slot="start" name="log-out"></ion-icon>
-              <ion-label>
+              <ion-icon color="label" slot="start" name="log-out"></ion-icon>
+              <ion-label color="label">
                 Déconnexion
               </ion-label>
             </ion-item>
@@ -105,16 +97,16 @@
 
         </ion-list>
 
-        <ion-list *ngIf="!loggedIn" lines="none">
-          <ion-list-header>
+        <ion-list *ngIf="!isConnected()" lines="none">
+          <ion-list-header color="primary">
             Compte
           </ion-list-header>
 
 
           <ion-menu-toggle autoHide="false" >
             <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="log-in"></ion-icon>
-              <ion-label>
+              <ion-icon color="label" slot="start" name="log-in"></ion-icon>
+              <ion-label color="label">
                 Connexion
               </ion-label>
             </ion-item>
@@ -123,24 +115,15 @@
 
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/register" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="person-add"></ion-icon>
-              <ion-label>
+            <ion-item class="label" routerLink="/register" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon color="label" slot="start" name="person-add"></ion-icon>
+              <ion-label color="label">
                 Inscription
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
-
-        <ion-list>
-          <ion-item>
-            <ion-label>
-              Mode nuit
-            </ion-label>
-            <ion-toggle [(ngModel)]="dark"></ion-toggle>
-          </ion-item>
-        </ion-list>
       </ion-content>
     </ion-menu>
 

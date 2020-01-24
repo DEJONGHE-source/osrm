@@ -4,15 +4,12 @@ import { SwUpdate } from '@angular/service-worker';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { AuthenticateService } from './pages/services/authentication.service';
 
-
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Storage } from '@ionic/storage';
-
-import { UserData } from './providers/user-data';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +39,6 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private activatedRoute : ActivatedRoute,
@@ -50,18 +46,19 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
   }
-
+  
   async ngOnInit() {
 
-    this.connected=this.connectedService.userDetails();
+    this.checkLoginStatus();
+    this.listenForLoginEvents();
+
+    /*this.connected=this.connectedService.userDetails();
     console.log("connected ou pas");
     if(this.connected != null && this.connected!=undefined){
       console.log("connecté")
     }else{
       console.log('non connecté')
-    }
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
+    }*/
 
     this.swUpdate.available.subscribe(async res => {
       const toast = await this.toastCtrl.create({
@@ -80,6 +77,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.checkLoginStatus();
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -87,10 +88,18 @@ export class AppComponent implements OnInit {
     });
   }
 
+  isConnected(){
+      var connected = this.connectedService.userDetails();
+      if(connected != null && connected!=undefined){
+        return true;
+      }else{
+        return false;
+      }
+  }
+
   checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      return this.updateLoggedInStatus(loggedIn);
-    });
+    this.loggedIn = this.isConnected();
+    return this.updateLoggedInStatus(this.loggedIn);
   }
 
   updateLoggedInStatus(loggedIn: boolean) {
@@ -99,32 +108,23 @@ export class AppComponent implements OnInit {
     }, 300);
   }
 
-
-
   listenForLoginEvents() {
-    window.addEventListener('user:login', () => {
+    window.addEventListener('login', () => {
+      console.log("update true")
       this.updateLoggedInStatus(true);
     });
 
-    window.addEventListener('user:signup', () => {
-      this.updateLoggedInStatus(true);
-    });
-
-    window.addEventListener('user:logout', () => {
+    window.addEventListener('logout', () => {
+      console.log("update false")
       this.updateLoggedInStatus(false);
     });
   }
 
   logout() {
-    this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
+    this.connectedService.logoutUser().then(() => {
+      this.loggedIn = false;
+      return window.location.replace("http://localhost:8100");
     });
-  }
-
-  openTutorial() {
-    this.menu.enable(false);
-    this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
   }
 
   show(){
@@ -228,17 +228,7 @@ export class AppComponent implements OnInit {
     await window.location.replace("http://localhost:8100/app/tabs/Orientation");
   }
 
-  isConnected(){
-    this.connected=this.connectedService.userDetails();
-    console.log("connected ou pas");
-    if(this.connected != null && this.connected!=undefined){
-      console.log("connecté")
-      return 'true';
-    }else{
-      console.log('non connecté')
-      return 'false';
-    }
-  }
+
 
 
 
@@ -251,15 +241,5 @@ export class AppComponent implements OnInit {
       url: ['/app/tabs/map'],
       icon: 'map'
     },
-    /*{
-      title: 'Espace Personnel',
-      url: '/app/tabs/UserSpace',
-      icon: 'body'
-    },*/
-    /*{
-      title: 'Schedule',
-      url: '/app/tabs/schedule',
-      icon: 'information-circle'
-    }*/
   ];
 }
