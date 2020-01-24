@@ -21,7 +21,7 @@ import { AngularFireModule} from 'angularfire2';
 
 
 import * as firebase from 'firebase';
-
+ 
 
 firebase.initializeApp(environment.firebase);
 @NgModule({
