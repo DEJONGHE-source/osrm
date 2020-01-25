@@ -85,20 +85,21 @@
       </ion-card>
     </ion-col>
 
-
-    <ion-card >
-      <ion-card-header>
-        <ion-item detail="false" lines="none">
-          localisations
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item *ngFor="let c of coordsButtons;">
-            <ion-button >{{c}}</ion-button>
+    <ion-col>
+      <ion-card *ngIf="received == true">
+        <ion-card-header>
+          <ion-item detail="false" lines="none">
+            localisations
           </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let c of coordsButtons;">
+              <ion-button >{{c}}</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
 
   </ion-row>

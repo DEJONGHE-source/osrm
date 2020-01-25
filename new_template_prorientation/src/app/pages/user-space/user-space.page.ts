@@ -171,19 +171,25 @@ export class UserSpacePage implements OnInit {
 
   createChart(x_axis,y_axis) {
 
-    var ctx = document.getElementById('myChart').getContext('2d');
-    // var ctx = $('#myChart');
-    // var ctx = 'myChart';
+    var canvas = <HTMLCanvasElement> document.getElementById("myChart");
+    var ctx = canvas.getContext("2d");
+
+    //var ctx = document.getElementById('myChart').getContext('2d');
 
     this.chart = new Chart(ctx, {
       type: 'bar',
       data: { labels: x_axis,
-       datasets: [
-         {
-           data: y_axis
-         }
-       ]},
-      options: {/* Options here */}
+       datasets: [{
+           data: y_axis,
+           backgroundColor: ['rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)',
+                             'rgba(163, 232, 126, 0.2)']
+      }]},
+      options: {legend: {display: false,}}
     });
   }
 

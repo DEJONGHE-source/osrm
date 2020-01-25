@@ -38,6 +38,7 @@ export class OrientationPage implements OnInit {
   total_distance = 0;
   lat=0;
   long=0;
+  received = false
 
   constructor(
     private mapService : MapService,
@@ -97,12 +98,10 @@ export class OrientationPage implements OnInit {
 
         await this.storage.get('distanceCoursePied').then((res) =>{
           target = res;
-
         });
         var tickedInterest = new Array();
         await this.storage.get('tickedInterest').then((res) =>{
           tickedInterest = res;
-
         });
 
 
@@ -149,6 +148,8 @@ export class OrientationPage implements OnInit {
             var marker = L.marker([coordConservedNodes[i][1], coordConservedNodes[i][0]]).addTo(mymap);
             marker.bindPopup((i+1).toString()).openPopup();
           }
+
+          this.received = true;
         });
 
       }).catch((error) => {
@@ -157,7 +158,9 @@ export class OrientationPage implements OnInit {
     }
 
     addOrientationToFirebase(){
-      var date = new Date();
+      var new_date = new Date();
+
+      var new_date_str = new_date.getFullYear()+'-'+new_date.getMonth() +'-'+new_date.getDate();
 
       this.connected=this.connectedService.userDetails();
 
@@ -168,7 +171,7 @@ export class OrientationPage implements OnInit {
           id_user:this.connected.uid,
           time:this.time.toString(),
           type:"orientation",
-          date:date_form
+          date:new_date_str
 
         })
       }
@@ -200,17 +203,19 @@ export class OrientationPage implements OnInit {
 
     onLocationFound = (e) => {
 
-      var getdistance = this.getDistance(e);
-      this.total_distance = this.total_distance + getdistance[0];
-      if (getdistance[1] == undefined || getdistance[2]== undefined) {
+      var getdistance = this.getDistance(e).then((res) => {
 
-      } else {
-        this.lat = getdistance[1];
-        this.long = getdistance[2];
-      }
+        this.total_distance = this.total_distance + res[0];
 
 
+        if (res[0] == 0) {
 
+        } else {
+          this.lat = getdistance[1];
+          this.long = getdistance[2];
+        }
+
+      });
     }
 
     getDistance = (e) =>{

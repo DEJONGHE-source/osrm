@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
     private authService: AuthenticateService,
     private formBuilder: FormBuilder
 
+
   ) { }
 
   ngOnInit() {
@@ -35,6 +36,8 @@ export class LoginPage implements OnInit {
       ])),
     });
   }
+
+
 
 
   validation_messages = {
@@ -56,6 +59,7 @@ export class LoginPage implements OnInit {
       window.dispatchEvent(new CustomEvent('login'));
       this.errorMessage = "";
       this.navCtrl.navigateForward('');
+      //this.navCtrl.back();
     }, err => {
       this.errorMessage = err.message;
     })
