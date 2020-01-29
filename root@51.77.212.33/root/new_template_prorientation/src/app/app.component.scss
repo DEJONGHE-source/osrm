@@ -1,0 +1,29 @@
+ion-item {
+  --transition: unset;
+}
+
+
+.active {
+  --color: var(--ion-color-primary);
+  --background: rgba(var(--ion-color-primary-rgb), 0.12);
+  --background-hover: rgba(var(--ion-color-primary-rgb), 0.16);
+  --background-focused: rgba(var(--ion-color-primary-rgb), 0.24);
+
+  ion-icon {
+    color: inherit;
+  }
+} 
+
+.button{
+  --background: var(--ion-color-primary-button);
+}
+.belal{
+  --color: var(--ion-color-primary-writting);
+}
+
+
+
+.ionlistScss{
+  max-height: 350px;
+  overflow-y: scroll;
+}

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="secondary">Espace personnel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-card>
+      <ion-card-header>
+        <ion-item detail="false">
+          Informations personnelles
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item *ngIf="isConnected()" detail="false">
+          <div class="user-logo">
+            <img src="assets/img/users/hugo.png">
+          </div>
+        </ion-item>
+        <ion-item detail="false">
+          Nom : {{last_name}}
+        </ion-item>
+        <ion-item detail="false">
+          Prenom : {{first_name}}
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-item>
+
+
+  <ion-grid >
+    <ion-row class="ion-align-items-stretch">
+      <ion-col size="12" size-md="4" *ngFor="let item of seances">
+        <ion-card class="speaker-card">
+          <ion-card-header>
+            <ion-item>
+              seances du: {{item[3]}}
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                distance : {{item[0]}}
+              </ion-item>
+              <ion-item>
+                {{item[1]}}
+              </ion-item>
+              <ion-item>
+                {{item[2]}}
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-title>Performances</ion-title>
+  </ion-item>
+  <ion-item>
+    <canvas id="myChart"></canvas>
+  </ion-item>
+  
+</ion-content>

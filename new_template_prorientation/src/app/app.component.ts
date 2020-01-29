@@ -226,7 +226,7 @@ export class AppComponent implements OnInit {
     this.distanceSubmit= true;
     await this.storage.set(`distanceOrientation`,form.value.distance);
     await this.storage.set(`tickedInterest`,this.tickedInterest);
-    await window.location.replace("http://localhost:8100/app/tabs/Orientation");
+    await window.location.replace("/app/tabs/Orientation");
   }
 
 

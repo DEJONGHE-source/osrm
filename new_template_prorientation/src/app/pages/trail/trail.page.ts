@@ -55,6 +55,9 @@ export class TrailPage implements OnInit {
       this.lat=resp.coords.latitude
       this.long=resp.coords.longitude
 
+      this.lat = 45.783957
+      this.long=4.872773
+
       console.log(this.lat,this.long)
       /*var container = L.DomUtil.get('mapid');
       if (container != null){
@@ -196,7 +199,7 @@ export class TrailPage implements OnInit {
       this.afs.collection('/seances').add({
         distance:this.total_distance,
         id_user:this.connected.uid,
-        time:this.time.toString(),
+        time:this.time.toString() + " s",
         type:"trail",
         date:new_date_str
 
@@ -275,7 +278,7 @@ export class TrailPage implements OnInit {
                 lat = 0;
                 long = 0;
               }
-              resolve([10,lat,long]);
+              resolve([0,lat,long]);
             }else{
               reject("echec");
             }

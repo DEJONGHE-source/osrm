@@ -29,6 +29,10 @@ export class MapPage implements OnInit {
     object1.getCurrentPosition().then(async (resp) => {
       var lat=resp.coords.latitude
       var long=resp.coords.longitude
+
+      lat = 45.783957
+      long=4.872773
+
       console.log(lat,long)
 
       // var container = L.DomUtil.get('mapid1');
@@ -51,7 +55,7 @@ export class MapPage implements OnInit {
         watch:true,
 
       });
-  
+
       maptest1.locate({
         watch:true,
 
